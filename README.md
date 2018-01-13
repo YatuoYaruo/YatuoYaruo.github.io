@@ -1,173 +1,144 @@
-# HANUMAN Jekyll Theme
+使用GitHub Pages+Jekyll搭建[个人博客](https://stidio.github.io)
+=======
 
-[![Build Status](https://travis-ci.org/samanyougarg/hanuman.svg?branch=master)](https://travis-ci.org/samanyougarg/hanuman)
+### 概述 ###
 
-Hanuman is a minimal yet powerful Jekyll theme for your blogs and websites.
+![](/assets/build_blog_with_github_and_jekyll/01.jpg)
 
-It is built using the open source [AMP Start framework](https://www.ampstart.com/) and can be customized as per your requirements.
+> **`GitHub Pages`** 免费无限容量的站点数据托管工具(*国内访问速度较慢*)，内置Jekyll服务，能将特定名称的代码仓库动态编译为静态网页
+>
+> **`Jekyll`** 基于Ruby的静态网页生成系统，采用模板将Markdown(或Textile)文件转换为统一的网页
+>
+> **统计** 统计工具主要是为了方便查看站点的访问情况，目前支持[百度统计](http://tongji.baidu.com)和[Google Analytics](http://www.google.com/analytics/)(可同时使用)
+>
+> **评论** 评论工具可以为静态页面增加评论和分享功能，目前支持国内的[多说](http://duoshuo.com)和国外的[Disqus](https://disqus.com)
+>
+> > *本文将重点介绍标注 `　　　` 的必选项目，未标注的可选项目请按照给定地址自行注册即可*
 
-## Live Demo
-## [Hanuman](https://samanyougarg.com/hanuman)
-![Hanuman](/Screenshots/hanuman.jpg "Hanuman Preview")
+### 建立GitHub Pages站点 ###
 
+1. 在GitHub上建立一个以 ***.github.io*** 为后缀的和你帐号名一样的代码仓库，如我的帐号是:[stidio](https://github.com/stidio)，则建立的仓库名为:[stidio.github.io](https://github.com/stidio/stidio.github.io), 同时在底部Add .gitigore选择Jekyll模板，这样Jekyll产生的临时文件，例如_site目录就不会添加到源代码管理中，当然你也可以以后手动配置:
 
-## Features
+    ![](/assets/build_blog_with_github_and_jekyll/02.jpg)
 
-- Minimal
-- Responsive
-- Syntax Highlighting for code
-- Cover Images for homepage and blog posts
-- Social Sharing
-- Simple Navigation Menu
-- Pagination
-- Google Analytics
-- Can be easily installed via "theme gem"
-- Github Pages support
-- Easily Customisable
+2. 将该代码仓库克隆到地:
 
-## What is AMP
+    > ```sh
+    > $ git clone https://github.com/stidio/stidio.github.io
+    > ```
 
-AMP stands for [Accelerated Mobile Pages](https://www.ampproject.org/), a Google-backed project designed as an open standard for any publisher to have pages load quickly on mobile devices.
+3. 创建一个测试页面并推送:
 
-## Installation
+    > ```sh
+    > $ cd stidio.github.io
+    > $ echo "Hello World" > index.html
+    > $ git add --all
+    > $ git commit -m "Initial commit"
+    > $ git push -u origin master
+    > ```
 
-There are different ways to install the theme - 
+4. 浏览器中输入[stidio.github.io](https://stidio.github.io)，如果一切正常，你应该能看到一个显示Hello World的页面.
 
-### 1. Cloning the repository and updating settings
-1. Fork this repository and clone the forked repository.
-2. Update the _config.yml file as per your requirements.
-3. Add your posts to the _posts directory.
-4. Deploy to Github Pages or your own server.
+> *请将以上的 __stidio__ 替换为你申请的帐号名*
 
-#### Deploying to Github Pages
-**Method 1**
+### 安装配置Jekyll ###
 
-Push the contents of the destination folder (mentioned in _config.yml. eg - destination: ../hanuman-pages/) to the gh-pages branch(if project page) or master branch(if user page) of your repository.
+1. 安装Jekyll:
 
-**Method 2**
+    > ```sh
+    > $ gem install jekyll
+    > ```
 
-- Set up travis-ci for your fork. 
-- Generate your secure token with the travis gem:
-  Run `gem install travis` on your terminal.
-- Grab the GH_TOKEN from https://github.com/settings/tokens
-- Then run `travis encrypt 'GIT_NAME="YOUR_USERNAME" GIT_EMAIL="YOUR_EMAIL" GH_TOKEN=YOUR_TOKEN'`
-- Add the token to your .travis.yml file.
-Now you just need to push the files. Travis will generate the HTML files and automatically push them to your gh-pages branch. 
-This is the setup I am using.
+2. 创建或使用模板, 创建模板使用 *jekyll new __name__* 命令，但创建出来的测试模板极其简陋，在这里我主要介绍使用第三方主题，在 [这里](http://jekyllthemes.org) 你可以找到各种主题，当然你也可以直接使用我的博客模板:[点击下载](https://github.com/stidio/stidio.github.io/archive/master.zip)，下载后解压到本地代码仓库目录，并运行 *bundle install* 命令安装项目依赖包.
 
-### 2. Ruby Gem Method
-Add this line to your Jekyll site's `Gemfile`:
+3. 运行 *jekyll serve* 启动本地测试服务器，Jekyll默认使用4000端口，如果被占用，可以使用 *jekyll serve -P $PORT* 指定其他端口，如果本机从没配置过Jekyll，可能会给出 *cannot load such file -- bundler* 的错误，运行 *gem install bundler* 即可解决，如果还是出现包缺失的错误，可以从以下两点排查：
 
-```ruby
-gem "hanuman"
-```
+    > * Gemfile文件未添加指定包
+    > * 运行环境冲突，可以运行 *bundle exe jekyll serve* 执行，或者运行 *sudo bundle clean --force*(**该命令会对全局环境造成影响，小心使用**) 强制清理无关包后重新运行
 
-And add this line to your Jekyll site's `_config.yml`:
+4. 在浏览器中输入 [127.0.0.1:4000](http://127.0.0.1:4000) 进行本地预览
 
-```yaml
-theme: hanuman
-```
+> Ruby包管理工具介绍
+>
+> * `gem` 全局包管理工具，类似于Python的pip, Node.js的npm -g
+>   * gem install               安装组件
+>   * gem install -v            安装特定版本
+>   * gem list                  列出已经安装组件
+>   * gem sources -a            添加源
+>   * gem sources --remove      删除源
+>
+> * `bundle` 项目包管理工具，可以理解为一个独立的运行环境
+>   * bundle update             更新项目依赖包
+>   * bundle install            安装项目依赖包
+>   * sudo bundle clean --force 强制删除不相关的包
+>   * bundle exe                在指定环境中运行
 
-And then execute:
+### 使用我的博客模板 ###
 
-    $ bundle
+1. 按照注释说明修改 *_config.yml* 配置文件
+2. 删除文章目录 *_post/* 和文章图片目录 *images/posts/* 下面的所有内容
+3. Enjoy!
 
-Or install it yourself as:
+我的模板在 [leopardpan](https://github.com/leopardpan/leopardpan.github.io) 基础上进行了修改，主要改进了以下内容:
 
-    $ gem install hanuman
+> * 统一风格，给关于，标签页面添加了标题栏
+> * 添加分割改进文章列表的多标签显示
+> * 修正了一些翻译不全的文字
+> * 代码颜色高亮支持，综合了Pygments monokai方案和Rouge monokai.sublime方案，[点此查看](/css/code_style_monokai.css)
+> * 底部统计和版权排版对齐
+> * 更新Jekyll及其依赖包到最新版本
+> * 修正jekyll-sitemap加载失败的问题
+> * 支持GFM形式的Markdown Codeblock解析
 
-You'll also need to copy or create the _config.yml file just like in this repository. Similarly, you'll need to have a navigation.yml and author.yml in your _data directory.
+如果喜欢请[Star!](https://github.com/stidio/stidio.github.io)，谢谢!
 
-#### Deploying to Github Pages
-Run `bundle exec jekyll serve` inside your cloned repository. Push the contents of the resulting _site to your Github Pages repository.
+### 编写文章 ###
 
+文章为Markdown格式，请使用.md作为后缀名，有以下两个文章目录：
 
-### 3. Jekyll Remote Theme
-1. Create or update your Gemfile with the following - 
+> * `_posts` 文件名格式为：YEAR-MONTH-DAY-title.md
+> * `_drafts` 草稿目录，文件名格式为：title.md，即不加日期前缀，如果需要预览草稿，使用 *\--drafts* 选项运行 *jekyll serve* 或 *jekyll build*
+>
+> **\* 尽量避免使用中文文件名, 具体目录结构请参考: [官方文档](http://jekyll.com.cn/docs/structure/)**
 
-```ruby
-source "https://rubygems.org"
-gem "github-pages", group: :jekyll_plugins
-gem "jekyll-remote-theme"
-```
+每篇文章都必须以参数：
 
-2. Update the bundled gems using `bundle` command.
+> ```conf
+> ---
+> layout: post
+> title: 使用GitHub+Jekyll搭建个人博客
+> date: 2016-11-21 11:29:08 +0800
+> tags: [Jekyll, GitHub, 教程]
+> ---
+> ```
 
-3. Add `remote_theme: "hanuman"` to your `_config.yml`.
+作为头部信息，layout为布局格式；title为显示的文章名；date为显示的发布日期；tags为文章分类标签
 
-4. Add `jekyll-remote-theme` to the plugins array of your `_config.yml` - 
+文章正文采用Markdown编写，如果不熟悉可以查看: [Markdown 快速入门](http://wowubuntu.com/markdown/basic.html)；强烈建议遵循[Markdown Lint](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md)，规范有一些对书写文章不友好的地方，我做了调整，以下是我的[Visual Studio Code](https://code.visualstudio.com)的配置文件:
 
-```yaml
-plugins:
-  - jekyll-remote-theme
-```
+> ```json
+> "markdownlint.config": {
+>         "MD002": false,                                 // 禁用文章开头必须为H1标题栏
+>         "MD001": false,                                 // 禁用严格的标题层级关系(H1->H2->H3...)
+>         "MD003": { "style": "setext_with_atx_closed"},  // 允许#和===形式的标题风格混用
+>         "MD009": { "br_spaces": 2 },                    // 允许末尾两个空格为<BR/>自动换行模式
+>         "MD013": false,                                 // 禁用单行长度限制
+>         "MD014": false,                                 // 禁用sh命令以 $ 作为开始
+>         "MD038": false,                                 // 禁用代码不以空格作为开始或结束
+>         "MD041": false,                                 // 禁用代码段必须有标题栏
+>         "MD029": { "style": "ordered" }                 // 有序列表格式为顺序方式
+>     }
+> ```
 
-## Usage
+Jekyll的Markdown解释器从3.0开始，默认从 *redcarpet+Pygments* 换为 *kramdown+Rouge*, 现在已知的问题为：列表下不支持GFM形式的代码块(神奇的是Github下的README.md文件支持)，折中的办法是使用区块引用(Blockquote)，在其下再使用代码块(我的博客模板已针对这种情况在呈现上做了优化)
 
-### _config.yml
-Update _config.yml with your respective settings like updating your site's name, description etc...
+### 参考资料 ###
 
-### Styling
-AMP has a limitation that you can only use inline css.
-All the CSS for this theme is in the styles.scss file in the includes directory.
-
-#### Changing the Default Color
-In the styles.scss file in the includes directory, you can change the hex value of $theme-color to the color you would like your site to use.
-
-### Author Information
-Author information is present in the author.yml file in the _data folder. You can update the fields of that file as per your requirements.
-
-### Sidenav
-Sidenav can be updated from the navigation.yml file in the _data folder.
-
-## Writing Posts
-You can write posts just as you would in Jekyll, the only difference being that AMP has some strict guidelines on including external content.
-
-You cannot use Markdown format or normal HTML tags. AMP provides its own custom tags for images, videos etc...
-
-### Examples - 
-
-**Images**
-`<amp-img src="welcome.jpg" alt="Welcome" height="400" width="800"></amp-img>`
-
-**Videos**
-`<amp-youtube data-videoid="mGENRKrdoGY" layout="responsive" width="480" height="270"></amp-youtube>`
-
-[See Full AMP Documentation.](https://www.ampproject.org/docs/)
-
-### Using AMP Components
-Some AMP components require you to specify external scripts before using them.
-You can specify these scripts in the head.html file in the includes directory after the already imported scripts and then use these components in any post.
-
-## Validating your page with AMP
-AMP provides built-in validator to validate your pages so that they can rendered quickly. 
-
-You can access this validator by opening the Developer Console in your browser and adding #development=1 to any url of your site.
-
-Example - 
-http://localhost:4000/#development=1
-
-If you have errors on your page, AMP will list those for you in the console. If you do not have any errors, you'll get a message "AMP Validation Successful" on your console.
-
-## Enabling Google Analytics
-1. Set up your Analytics Tracking ID in _config.yml.
-2. Remove {% comment %} and {% endcomment %} tags in the default.html file in layouts directory.
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/samanyougarg/hanuman. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-To submit a pull request - 
-
-1. Fork/clone the repository.
-2. Develop.
-3. Create a new branch from the master branch.
-4. Open a pull request on Github describing what was fixed or added.
-
-## Thanks
-Hanuman is based on [amplify](https://github.com/ageitgey/amplify) jekyll theme. Thank You.
-
-## License
-
-The theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
+[Github 简明教程](http://www.runoob.com/w3cnote/git-guide.html)  
+[Git 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)  
+[Jekyll 英文文档](https://jekyllrb.com/docs/home/)  
+[Jekyll 中文文档](http://jekyll.com.cn/docs/home/)  
+[Jekyll 代码高亮的几种选择](http://blog.csdn.net/qiujuer/article/details/50419279)  
+[Markdown 语法说明](http://wowubuntu.com/markdown/index.html)  
+[Markdown Lint](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md)  
+[kramdown Quick Reference](http://kramdown.gettalong.org/quickref.html)
