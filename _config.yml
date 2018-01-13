@@ -1,12 +1,12 @@
 # Basic
-title: 周刚
-subtitle: Nicolas Chow
-description: 凡是过去 皆为序章
+title: 杨 易 
+subtitle: Yatuo
+description: Never Settle Down
 # 头像里面的标题
-avatarTitle: stidio
+avatarTitle: come in
 # 头像里面的描述
-avatarDesc: 编程·管理·运动·读书
-url: "http://stidio.github.io"
+avatarDesc: 编程·美剧·游戏·读书
+url: "http://yatuoyaruo.github.io"
 
 # Comment
 comment:
@@ -47,7 +47,7 @@ markdown: kramdown
 highlighter: rouge
 
 # supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
-cover_color: clear #背景Mask
+一cover_color: clear #背景Mask
 
 # The blog button should not be removed.
 blog_button:
